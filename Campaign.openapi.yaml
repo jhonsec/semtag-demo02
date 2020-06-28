@@ -164,8 +164,6 @@ components:
           type: string
         subscriberId:
           type: string
-        webID:
-          type: string
     PromotionATS:
       title: PromotionATS
       type: object
