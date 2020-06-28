@@ -1,0 +1,271 @@
+openapi: 3.0.1
+info:
+  title: Campaign
+  description: Servicio para visualizar bonos - Proyecto Fidelizacion 2020
+  version: '1.0.0'
+servers:
+  - url: https://apimngr-genesis-dev.azure-api.net/campaign-fidelizacion/v1
+paths:
+  /canjearBono:
+    post:
+      tags:
+        - bonoprepago-controller
+      summary: canjear
+      description: canjear
+      operationId: canjearUsingPOST
+      requestBody:
+        description: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestInfoCanjeo'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ResponseInfoBonoprepagoOfstring'
+        '201':
+          description: Created
+          content:
+            application/json;charset=UTF-8: { }
+        '401':
+          description: Unauthorized
+          content:
+            application/json;charset=UTF-8: { }
+        '403':
+          description: Forbidden
+          content:
+            application/json;charset=UTF-8: { }
+        '404':
+          description: Not Found
+          content:
+            application/json;charset=UTF-8: { }
+  /getAvailablePromotions:
+    post:
+      tags:
+        - bonoprepago-controller
+      summary: retrieveAvailablePromotions
+      description: retrieveAvailablePromotions
+      operationId: retrieveAvailablePromotionsUsingPOST
+      requestBody:
+        description: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestInfoNovum'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ResponseInfoBonoprepagoOfBonoprepago'
+        '201':
+          description: Created
+          content:
+            application/json;charset=UTF-8: { }
+        '401':
+          description: Unauthorized
+          content:
+            application/json;charset=UTF-8: { }
+        '403':
+          description: Forbidden
+          content:
+            application/json;charset=UTF-8: { }
+        '404':
+          description: Not Found
+          content:
+            application/json;charset=UTF-8: { }
+  /getPromotionsByTime:
+    post:
+      tags:
+        - bonoprepago-controller
+      summary: getPromotions
+      description: getPromotions
+      operationId: getPromotionsUsingPOST
+      requestBody:
+        description: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestInfoPermanencia'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/PromotionResponse'
+        '201':
+          description: Created
+          content:
+            application/json;charset=UTF-8: { }
+        '401':
+          description: Unauthorized
+          content:
+            application/json;charset=UTF-8: { }
+        '403':
+          description: Forbidden
+          content:
+            application/json;charset=UTF-8: { }
+        '404':
+          description: Not Found
+          content:
+            application/json;charset=UTF-8: { }
+components:
+  schemas:
+    Bono:
+      title: Bono
+      type: object
+      properties:
+        description:
+          type: string
+        detail:
+          $ref: '#/components/schemas/BonoStorageBean'
+        id:
+          type: string
+        responseTrackingCD:
+          type: string
+        selected:
+          type: boolean
+        type:
+          type: string
+    BonoStorageBean:
+      title: BonoStorageBean
+      type: object
+      properties:
+        detailDescription:
+          type: string
+        detailDuration:
+          type: string
+        detailExpiration:
+          type: string
+        detailQuantity:
+          type: string
+    Bonoprepago:
+      title: Bonoprepago
+      type: object
+      properties:
+        bonoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bono'
+        callbackURL:
+          type: string
+        lineType:
+          type: string
+        nonce:
+          type: string
+        originApp:
+          type: string
+        phone:
+          type: string
+        subscriberId:
+          type: string
+        webID:
+          type: string
+    PromotionATS:
+      title: PromotionATS
+      type: object
+      properties:
+        canje:
+          type: boolean
+        etag:
+          type: string
+        id:
+          type: integer
+          format: int32
+        mb:
+          type: string
+        partitionKey:
+          type: string
+        plan:
+          type: string
+        rango:
+          type: string
+        rowKey:
+          type: string
+        tiempoS:
+          type: string
+        tiempop:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    PromotionResponse:
+      title: PromotionResponse
+      type: object
+      properties:
+        permanencia:
+          type: string
+        promotionList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PromotionATS'
+    RequestInfoCanjeo:
+      title: RequestInfoCanjeo
+      type: object
+      properties:
+        bonoId:
+          type: string
+        descripcion:
+          type: string
+        email:
+          type: string
+        lineType:
+          type: string
+        phone:
+          type: string
+        responseTrackingCD:
+          type: string
+        subscriberId:
+          type: string
+    RequestInfoNovum:
+      title: RequestInfoNovum
+      type: object
+      properties:
+        encryptedToken:
+          type: string
+    RequestInfoPermanencia:
+      title: RequestInfoPermanencia
+      type: object
+      properties:
+        phone:
+          type: string
+    ResponseInfoBonoprepagoOfBonoprepago:
+      title: ResponseInfoBonoprepagoOfBonoprepago
+      type: object
+      properties:
+        responseCode:
+          type: string
+        responseData:
+          $ref: '#/components/schemas/Bonoprepago'
+        responseMessage:
+          type: string
+    ResponseInfoBonoprepagoOfstring:
+      title: ResponseInfoBonoprepagoOfstring
+      type: object
+      properties:
+        responseCode:
+          type: string
+        responseData:
+          type: string
+        responseMessage:
+          type: string
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Ocp-Apim-Subscription-Key
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]
+tags:
+  - name: bonoprepago-controller
+    description: Bonoprepago Controller
