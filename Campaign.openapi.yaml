@@ -222,6 +222,10 @@ components:
           type: string
         subscriberId:
           type: string
+        fieldOpt1:
+          type: string
+        fieldOpt2:
+          type: string
     RequestInfoNovum:
       title: RequestInfoNovum
       type: object
