@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Campaign
-  description: Servicio para visualizar bonos - Proyecto Fidelizacion 2020
+  description: Servicio para visualizar bonos - Proyecto Fidelizacion 2020-06
   version: '1.0.1'
 servers:
   - url: https://apimngr-genesis-dev.azure-api.net/campaign-fidelizacion/v1
